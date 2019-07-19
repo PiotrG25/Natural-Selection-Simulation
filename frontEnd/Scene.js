@@ -34,19 +34,19 @@ function Scene(scene, sizeX, sizeY){
 				for(var j = 0; j < this.foods.length; j++){
 					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y)){
 						this.species[i].eat();
-						removeFood(j);
+						this.removeFood(j);
 					}
 				}
 				
 				for(var j = 0; j < this.species.length; j++){
 					if(this.species[j].exists && this.species[i].canEat(this.species[j].x, this.species[j].y, this.species[j].size)){
 						this.species[i].eat();
-						removeSpecie(j);
+						this.removeSpecie(j);
 					}
 				}
 			}
 		}
-		adjustTables();
+		this.adjustTables();
 	}
 	this.adjustTables = function(){
 		var i = 0, j = 0;
@@ -63,5 +63,12 @@ function Scene(scene, sizeX, sizeY){
 				tab[j++] = this.foods[i];
 		}
 		this.foods = tab;
+	}
+	this.moveSpecies = function(){
+		for(var i = 0; i < this.species.length; i++){
+			var x = Math.floor(Math.random() * this.species[i].speed);
+			var y = 10 - x;
+			this.species[i].move(x, y);
+		}
 	}
 }

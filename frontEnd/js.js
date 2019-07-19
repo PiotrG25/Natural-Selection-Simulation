@@ -1,20 +1,32 @@
 $(function(){
 	
-	var scene = new Scene($("#scene"), $("#scene").css("width"), $("#scene").css("height"));	
-	
-	
+	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")));
 	
 	scene.addFoods(100);
-	console.log(scene.foods[0].x, scene.foods[0].y);
-	scene.removeFood(0);
-	scene.addSpecie(1, 25, 1,Math.floor(Math.random() * 500), Math.floor(Math.random() * 500));
-	scene.addSpecie(1, 25, 1,Math.floor(Math.random() * 500), Math.floor(Math.random() * 500));
-	scene.addSpecie(1, 25, 1,Math.floor(Math.random() * 500), Math.floor(Math.random() * 500));
-	scene.addSpecie(1, 25, 1,Math.floor(Math.random() * 500), Math.floor(Math.random() * 500));
-	scene.addSpecie(1, 25, 1,Math.floor(Math.random() * 500), Math.floor(Math.random() * 500));
+	for(var i = 0; i < 12; i++){
+		var r = Math.random();
+		if(r < 0.25){
+			scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), 0);
+		}else if(r < 0.5){
+			scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), 500);
+		}else if(r < 0.75){
+			scene.addSpecie(10, 25, 1, 0, Math.floor(Math.random() * scene.sizeY));
+		}else{
+			scene.addSpecie(10, 25, 1, 500, Math.floor(Math.random() * scene.sizeY));
+		}
+	}
 	
-	scene.removeSpecie(0);
-	
+	var startStop = $("#startStopButton");
+	startStop.click(function(){
+		var interval = setInterval(function(){
+			scene.moveSpecies();
+			scene.findingFood();//to fix
+		}, 100);
+		
+		setTimeout(function(){
+			clearInterval(interval);
+		}, 5000);
+	});
 	
 	
 	/*

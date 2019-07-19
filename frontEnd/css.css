@@ -12,8 +12,6 @@ body{
 }
 .food{
 	position: absolute;
-	left: 10px;
-	top: 10px;
 	width: 9px;
 	height: 9px;
 	border-radius: 100%;
@@ -22,13 +20,17 @@ body{
 }
 .specie{
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	width: 49px;
-	height: 49px;
 	border-radius: 100%;
-	background-color: red;
 	border: 1px solid black;
 }
-
+.graph{
+	background-color: white;
+	margin-bottom: 5px;
+	margin-left: 50px;
+	width: 500px;
+	height: 163px;
+}
+.graph1{
+	margin-bottom: auto;
+}
 

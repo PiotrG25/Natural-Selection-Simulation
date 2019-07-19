@@ -11,13 +11,10 @@ function Specie(speed, size, sense, x, y){
 	
 	this.div = $("<div></div>");
 	this.div.addClass("specie");
-	this.div.css("position", "absolute");
 	this.div.css("top", this.y + "px");
 	this.div.css("left", this.x + "px");
 	this.div.css("width", 2*size-1+"px");
 	this.div.css("height", 2*size-1+"px");
-	this.div.css("border", "1px solid black");
-	this.div.css("borderRadius", "100%");
 	this.div.css("backgroundColor", "rgb("+speedToRed(speed)+","+sizeToGreen(size)+","+senseToBlue(sense)+")");
 	
 	
@@ -28,7 +25,10 @@ function Specie(speed, size, sense, x, y){
 		this.div.remove();
 	}
 	this.move = function(x, y){
-		//todo
+		this.x += x;
+		this.y += y;
+		this.div.css("left", this.x + "px");
+		this.div.css("top", this.y + "px");
 	}
 	this.canEat = function(x, y){
 		var d = (x - this.x)^2 + (y - this.y) ^ 2;
