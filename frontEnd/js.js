@@ -4,7 +4,7 @@ $(function(){
 	
 	scene.addFoods(100);
 	for(var i = 0; i < 12; i++){
-		scene.addSpecie(25, 25, 1, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
+		scene.addSpecie(25, 25, 100, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
 		/*
 		var r = Math.random();
 		if(r < 0.25){
@@ -18,10 +18,13 @@ $(function(){
 		}
 		*/
 	}
+	scene.addSpecie(50, 40, 25, 250, 250);
+	scene.addSpecie(50, 40, 25, 250, 150);
 	
 	var startStop = $("#startStopButton");
-	var speedOfSimulation = 10;
+	var speedOfSimulation = 1;
 	var frequency = 10;
+	
 	startStop.click(function(){
 		var interval = setInterval(function(){
 			scene.moveSpecies(frequency);
