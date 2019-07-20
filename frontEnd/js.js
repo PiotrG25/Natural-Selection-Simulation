@@ -4,6 +4,8 @@ $(function(){
 	
 	scene.addFoods(100);
 	for(var i = 0; i < 12; i++){
+		scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
+		/*
 		var r = Math.random();
 		if(r < 0.25){
 			scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), 0);
@@ -14,18 +16,19 @@ $(function(){
 		}else{
 			scene.addSpecie(10, 25, 1, 500, Math.floor(Math.random() * scene.sizeY));
 		}
+		*/
 	}
 	
 	var startStop = $("#startStopButton");
 	startStop.click(function(){
-		var interval = setInterval(function(){
+		//var interval = setInterval(function(){
 			scene.moveSpecies();
-			scene.findingFood();//to fix
-		}, 100);
+			//scene.findingFood();//to fix
+		//}, 100);
 		
-		setTimeout(function(){
-			clearInterval(interval);
-		}, 5000);
+		//setTimeout(function(){
+		//	clearInterval(interval);
+		//}, 5000);
 	});
 	
 	

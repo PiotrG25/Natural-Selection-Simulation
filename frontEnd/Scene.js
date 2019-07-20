@@ -19,6 +19,7 @@ function Scene(scene, sizeX, sizeY){
 		this.foods[index].remove();
 		this.foods[index].exists = false;
 	}
+	
 	this.addSpecie = function(speed, size, sense, x, y){
 		var index = this.species.length;
 		this.species[index] = new Specie(speed, size, sense, x, y);
@@ -28,7 +29,37 @@ function Scene(scene, sizeX, sizeY){
 		this.species[index].remove();
 		this.species[index].exists = false;
 	}
+	
+	
+	this.adjustSpecieTable = function(){
+		var i = 0, j = 0, tab = [];
+		for(; i < this.species.length; i++){
+			if(this.species[i].exists)
+				tab[j++] = this.species[i];
+		}
+		this.species = tab;
+	}
+	this.adjustFoodsTable = function(){
+		var i = 0; j = 0, tab = [];
+		for(; i < this.foods.length; i++){
+			if(this.foods[i].exists)
+				tab[j++] = this.foods[i];
+		}
+		this.foods = tab;
+	}
+	this.adjustTables = function(){
+		this.adjustSpecieTable();
+		this.adjustFoodsTable();
+	}
+	
+	this.moveSpecies = function(){
+		for(var i = 0; i < this.species.length; i++){
+			this.species[i].move(this.species, this.foods, this.sizeX, this.sizeY);
+		}
+	}
+	
 	this.findingFood = function(){
+		//todo FIX IT
 		for(var i = 0; i < this.species.length; i++){
 			if(this.species[i].exists){
 				for(var j = 0; j < this.foods.length; j++){
@@ -47,28 +78,5 @@ function Scene(scene, sizeX, sizeY){
 			}
 		}
 		this.adjustTables();
-	}
-	this.adjustTables = function(){
-		var i = 0, j = 0;
-		var tab = [];
-		for(; i < this.species.length; i++){
-			if(this.species[i].exists)
-				tab[j++] = this.species[i];
-		}
-		this.species = tab;
-		
-		i = 0; j = 0; tab = [];
-		for(; i < this.foods.length; i++){
-			if(this.foods[i].exists)
-				tab[j++] = this.foods[i];
-		}
-		this.foods = tab;
-	}
-	this.moveSpecies = function(){
-		for(var i = 0; i < this.species.length; i++){
-			var x = Math.floor(Math.random() * this.species[i].speed);
-			var y = 10 - x;
-			this.species[i].move(x, y);
-		}
 	}
 }
