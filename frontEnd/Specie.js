@@ -80,7 +80,7 @@ function Specie(speed, size, sense, x, y){
 			}
 		}
 		
-		if(predators.length == 0){
+		if(predators.length == 0){														//if doesn't see predators does not run away
 			return false;
 		}else{
 			var runAwayVector = new Vector(0, 0);
@@ -91,21 +91,29 @@ function Specie(speed, size, sense, x, y){
 			}
 			runAwayVector = runAwayVector.versor();
 			
-			this.setX(this.x + runAwayVector.x * this.speed, sizeX);
-			this.setY(this.y + runAwayVector.y * this.speed, sizeY);
+			this.setX(this.x + runAwayVector.x * this.speed / frequency, sizeX);
+			this.setY(this.y + runAwayVector.y * this.speed / frequency, sizeY);
 			
 			return true;
 		}
 	}
+	this.senseFoodAndGoTo = function(foods, species, sizeX, sizeY, frequency){
+		
+	}
+	this.moveRandomly = function(sizeX, sizeY, frequency){
+		
+	}
 	this.move = function(species, foods, sizeX, sizeY, frequency){
-		//todo meve requires energy
+		//todo move requires energy
 		//focus on survival/reproduction flag
 		
-		//this.moveToClosestEdge(sizeX, sizeY, frequency);
-		if(!this.sensePredatorAndRunAway(species, sizeX, sizeY, frequency)){
-			//this.senseFoodAndGoTo(foods, species, sizeX, sizeY, frequency)
+		if(!this.sensePredatorAndRunAway(species, sizeX, sizeY, frequency)){			//if doesn't have to run away focuses on food
+			if(this.foodFound > 0){														//if has food moves to safety
+				this.moveToClosestEdge(sizeX, sizeY, frequency);
+			}else if(!this.senseFoodAndGoTo(foods, species, sizeX, sizeY, frequency)){	//if can't find food mooves randomely
+				this.moveRandomly(sizeX, sizeY, frequency);
+			}
 		}
-		//this.moveRandomly(sizeX, sizeY, frequency);
 	}
 	this.canEat = function(x, y, size){
 		var d = this.distanceTo(x, y);
