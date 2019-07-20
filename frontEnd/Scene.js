@@ -1,14 +1,39 @@
-function Scene(scene, sizeX, sizeY){
+function Scene(scene, sizeX, sizeY, quantityOfFood, mutationChance, reproductionFocusChance){
 	this.div = scene;
 	this.sizeX = sizeX;
 	this.sizeY = sizeY;
 	
 	this.species = [];
 	this.foods = [];
+	this.quantityOfFood = quantityOfFood;
+	this.mutationChance = mutationChance;
+	this.reproductionFocusChance = reproductionFocusChance;
 	
 	
-	this.addFoods = function(quantity){
-		for(var i = 0; i < quantity; i++){
+	this.nextTurn = function(){
+		this.removeAllFood();
+		this.addFoods();
+		for(var i = 0; i < this.species.length; i++){
+			if(!this.species[i].survived()){
+				this.removeSpecie(i);
+				console.log("specie " + i + " did not survive");
+			}
+		}
+		this.adjustSpecieTable();
+		
+		for(var i = 0; i < this.species.length; i++){
+			if(this.species[i].canReproduce()){
+				var s = this.species[i].reproduce(this.mutationChance);
+				this.addSpecie(s.speed, s.size, s.sense, s.x, s.y);
+				console.log("specie " + i + " has reproduced");
+			}
+			this.species[i].nextTurn();
+		}
+	}
+	
+	
+	this.addFoods = function(){
+		for(var i = 0; i < this.quantityOfFood; i++){
 			this.foods[i] = new Food(Math.floor(Math.random() * parseInt(this.sizeX)), Math.floor(Math.random() * parseInt(this.sizeY)));
 			this.foods[i].appendTo(this.div);
 		}
@@ -18,15 +43,21 @@ function Scene(scene, sizeX, sizeY){
 		this.foods[index].exists = false;
 	}
 	this.removeAllFood = function(){
-		for(var i = 0; i < foods.length; i++){
-			this.removeFoos(i);
+		for(var i = 0; i < this.foods.length; i++){
+			this.removeFood(i);
 		}
 		this.adjustFoodsTable();
 	}
 	
 	this.addSpecie = function(speed, size, sense, x, y){
 		var index = this.species.length;
-		this.species[index] = new Specie(speed, size, sense, x, y, this.sizeX, this.sizeY);
+		var focusOnReproduction;
+		if(Math.random() < this.reproductionFocusChance){
+			focusOnReproduction = true;
+		}else{
+			focusOnReproduction = false;
+		}
+		this.species[index] = new Specie(speed, size, sense, x, y, this.sizeX, this.sizeY, focusOnReproduction);
 		this.species[index].appendTo(this.div);
 	}
 	this.removeSpecie = function(index){
@@ -83,12 +114,5 @@ function Scene(scene, sizeX, sizeY){
 			}
 		}
 		this.adjustTables();
-	}
-	
-	this.nextTurn = function(){
-		this.removeAllFood();
-		for(var i = 0; i < species.length; i++){
-			
-		}
 	}
 }

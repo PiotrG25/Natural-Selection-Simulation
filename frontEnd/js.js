@@ -1,25 +1,21 @@
 $(function(){
 	
-	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")));
+	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")), 100	, 5, 0.5);
 	
-	scene.addFoods(4);
-	for(var i = 0; i < 4; i++){
-		scene.addSpecie(25, 25, 100, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
-		/*
+	scene.addFoods();
+	for(var i = 0; i < 12; i++){
 		var r = Math.random();
 		if(r < 0.25){
-			scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), 0);
+			scene.addSpecie(25, 25, 25, Math.floor(Math.random() * scene.sizeX), 0);
 		}else if(r < 0.5){
-			scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), 500);
+			scene.addSpecie(25, 25, 25, Math.floor(Math.random() * scene.sizeX), 500);
 		}else if(r < 0.75){
-			scene.addSpecie(10, 25, 1, 0, Math.floor(Math.random() * scene.sizeY));
+			scene.addSpecie(25, 25, 25, 0, Math.floor(Math.random() * scene.sizeY));
 		}else{
-			scene.addSpecie(10, 25, 1, 500, Math.floor(Math.random() * scene.sizeY));
+			scene.addSpecie(25, 25, 25, 500, Math.floor(Math.random() * scene.sizeY));
 		}
-		*/
+		
 	}
-	//scene.addSpecie(50, 40, 25, 250, 250);
-	scene.addSpecie(50, 40, 100, 250, 150);
 	
 	var startStop = $("#startStopButton");
 	var speedOfSimulation = 1;
@@ -33,6 +29,7 @@ $(function(){
 		
 		setTimeout(function(){
 			clearInterval(interval);
+			scene.nextTurn();
 		}, 5000 / speedOfSimulation);
 	});
 	

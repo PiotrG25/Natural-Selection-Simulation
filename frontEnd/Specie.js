@@ -1,4 +1,4 @@
-function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY){
+function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY, focusOnReproduction){
 	this.speed = speed;
 	this.size = size;
 	this.sense = sense;
@@ -6,10 +6,13 @@ function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY){
 	this.y = y;
 	this.sceneSizeX = sceneSizeX;
 	this.sceneSizeY = sceneSizeY;
+	this.focusOnReproduction = focusOnReproduction;
 	
 	this.exists = true;
 	this.foodFound = 0;
-	this.energy = 50000;
+	this.energyConstant = 50000;
+	this.energy = this.energyConstant;
+	
 	
 	this.randomDirectionX = 0;
 	this.randomDirectionY = 0;
@@ -33,8 +36,15 @@ function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY){
 			return true;
 		return false;
 	}
-	this.reproduce = function(){
-		
+	this.reproduce = function(mutationChance){
+		var nextSpeed = this.speed * (1 + Math.random() * 2 * mutationChance / 100 - mutationChance / 100);
+		var nextSize = this.size * (1 + Math.random() * 2 * mutationChance / 100 - mutationChance / 100);
+		var nextSense = this.sense * (1 + Math.random() * 2 * mutationChance / 100 - mutationChance / 100);
+		return new Specie(nextSpeed, nextSize, nextSense, this.x, this.y, this.sceneSizeX, this.sceneSizeY);
+	}
+	this.nextTurn = function(){
+		this.foodFound = 0;
+		this.energy = this.energyConstant;
 	}
 	
 	this.appendTo = function(scene){
@@ -163,13 +173,12 @@ function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY){
 		this.setY(this.y + v.y * this.speed / frequency);
 	}
 	this.move = function(species, foods, frequency){
-		//todo move requires energy
-		//focus on survival/reproduction flag
+		
 		if(this.moveCost(frequency) < this.energy){
-			if(!this.sensePredatorAndRunAway(species, frequency)){			//if doesn't have to run away focuses on food
-				if(this.foodFound > 0){														//if has food moves to safety
+			if(!this.sensePredatorAndRunAway(species, frequency)){												//if doesn't have to run away focuses on food
+				if(this.foodFound >= 2 && this.focusOnReproduction || this.foodFound > 0 && !this.focusOnReproduction){ 	//if can reproduce or doesn't want but has food moves to safety
 					this.moveToClosestEdge(frequency);
-				}else if(!this.senseFoodAndGoTo(foods, species, frequency)){	//if can't find food mooves randomely
+				}else if(!this.senseFoodAndGoTo(foods, species, frequency)){									//if can't find food mooves randomely
 					this.moveRandomly(frequency);
 				}
 			}
@@ -190,7 +199,7 @@ function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY){
 		}
 	}
 	this.eat = function(){
-		this.energy += 50000;
+		this.energy += this.energyConstant;
 		this.foodFound++;
 	}
 	
