@@ -11,8 +11,8 @@ function Specie(speed, size, sense, x, y){
 	
 	this.div = $("<div></div>");
 	this.div.addClass("specie");
-	this.div.css("top", this.y + "px");
-	this.div.css("left", this.x + "px");
+	this.div.css("top", this.y - size+ "px");
+	this.div.css("left", this.x - size + "px");
 	this.div.css("width", 2*size-1+"px");
 	this.div.css("height", 2*size-1+"px");
 	this.div.css("backgroundColor", "rgb("+speedToRed(speed)+","+sizeToGreen(size)+","+senseToBlue(sense)+")");
@@ -32,7 +32,7 @@ function Specie(speed, size, sense, x, y){
 			x = 0;
 		}
 		this.x = x;
-		this.div.css("left", this.x + "px");
+		this.div.css("left", this.x - this.size + "px");
 	}
 	this.setY = function(y, sizeY){
 		if(y > sizeY){
@@ -41,7 +41,7 @@ function Specie(speed, size, sense, x, y){
 			y = 0;
 		}
 		this.y = y;
-		this.div.css("top", this.y + "px");
+		this.div.css("top", this.y - this.size+ "px");
 	}
 	
 	this.moveToClosestEdge = function(sizeX, sizeY){

@@ -3,7 +3,7 @@ $(function(){
 	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")));
 	
 	scene.addFoods(100);
-	for(var i = 0; i < 1; i++){
+	for(var i = 0; i < 12; i++){
 		scene.addSpecie(25, 25, 1, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
 		/*
 		var r = Math.random();
@@ -21,14 +21,14 @@ $(function(){
 	
 	var startStop = $("#startStopButton");
 	startStop.click(function(){
-		//var interval = setInterval(function(){
+		var interval = setInterval(function(){
 			scene.moveSpecies();
-			scene.findingFood();//to fix
-		//}, 100);
+			scene.findingFood();
+		}, 100);
 		
-		//setTimeout(function(){
-		//	clearInterval(interval);
-		//}, 5000);
+		setTimeout(function(){
+			clearInterval(interval);
+		}, 5000);
 	});
 	
 	

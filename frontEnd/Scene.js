@@ -63,7 +63,7 @@ function Scene(scene, sizeX, sizeY){
 			if(this.species[i].exists){
 				for(var j = 0; j < this.foods.length; j++){
 					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y, 0)){
-						console.log("specie " + i + "eats food " + j);
+						console.log("specie " + i + " eats food " + j);
 						this.species[i].eat();
 						this.removeFood(j);
 					}
