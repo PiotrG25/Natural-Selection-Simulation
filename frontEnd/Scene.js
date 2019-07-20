@@ -16,7 +16,7 @@ function Scene(scene, sizeX, sizeY, quantityOfFood, mutationChance, reproduction
 		for(var i = 0; i < this.species.length; i++){
 			if(!this.species[i].survived()){
 				this.removeSpecie(i);
-				console.log("specie " + i + " did not survive");
+				console.log("specie did not survive");
 			}
 		}
 		this.adjustSpecieTable();
@@ -25,7 +25,7 @@ function Scene(scene, sizeX, sizeY, quantityOfFood, mutationChance, reproduction
 			if(this.species[i].canReproduce()){
 				var s = this.species[i].reproduce(this.mutationChance);
 				this.addSpecie(s.speed, s.size, s.sense, s.x, s.y);
-				console.log("specie " + i + " has reproduced");
+				console.log("specie has reproduced");
 			}
 			this.species[i].nextTurn();
 		}
@@ -98,7 +98,7 @@ function Scene(scene, sizeX, sizeY, quantityOfFood, mutationChance, reproduction
 			if(this.species[i].exists){
 				for(var j = 0; j < this.foods.length; j++){
 					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y, this.foods[j].size)){
-						console.log("specie " + i + " eats food " + j);
+						console.log("specie eats food");
 						this.species[i].eat();
 						this.removeFood(j);
 					}

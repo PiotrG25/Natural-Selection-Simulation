@@ -18,8 +18,13 @@ $(function(){
 	}
 	
 	var startStop = $("#startStopButton");
-	var speedOfSimulation = 1;
+	var speedOfSimulation = 10;
 	var frequency = 10;
+	var turns = 0;
+	
+	scene.quantityOfFood = 50;
+	scene.removeAllFood();
+	scene.addFoods();
 	
 	startStop.click(function(){
 		var interval = setInterval(function(){
