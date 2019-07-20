@@ -9,6 +9,9 @@ function Specie(speed, size, sense, x, y){
 	this.foodFound = 0;
 	this.energy = 1;//todo how much for start
 	
+	this.randomDirectionX = 0;
+	this.randomDirectionY = 0;
+	
 	this.div = $("<div></div>");
 	this.div.addClass("specie");
 	this.div.css("top", this.y - size+ "px");
@@ -83,6 +86,8 @@ function Specie(speed, size, sense, x, y){
 		if(predators.length == 0){														//if doesn't see predators does not run away
 			return false;
 		}else{
+			this.randomDirectionX = 0;
+			
 			var runAwayVector = new Vector(0, 0);
 			for(var i = 0; i < predators.length; i++){
 				var vToMe = new Vector(this.x - predators[i].x, this.y - predators[i].y);
@@ -114,6 +119,7 @@ function Specie(speed, size, sense, x, y){
 		if(potentialFoodVectors.length == 0){
 			return false;
 		}else{
+			this.randomDirectionX = 0;
 			
 			var shortestPathToFood = new Vector(sizeX, sizeY);
 			for(var i = 0; i < potentialFoodVectors.length; i++){
@@ -130,7 +136,15 @@ function Specie(speed, size, sense, x, y){
 		}
 	}
 	this.moveRandomly = function(sizeX, sizeY, frequency){
-		var r = Math.random() * 3.14159;
+		if(this.randomDirectionX == 0 || this.distanceTo(this.randomDirectionX, this.randomDirectionY) <= this.speed){
+			this.randomDirectionX = Math.floor(Math.random() * sizeX + 1);
+			this.randomDirectionY = Math.floor(Math.random() * sizeY + 1);
+		}
+		var v = new Vector(this.randomDirectionX - this.x, this.randomDirectionY - this.y); //vector of new random position
+		v = v.versor();
+		
+		this.setX(this.x + v.x * this.speed / frequency, sizeX);
+		this.setY(this.y + v.y * this.speed / frequency, sizeY);
 	}
 	this.move = function(species, foods, sizeX, sizeY, frequency){
 		//todo move requires energy
