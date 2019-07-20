@@ -2,8 +2,8 @@ $(function(){
 	
 	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")));
 	
-	scene.addFoods(100);
-	for(var i = 0; i < 12; i++){
+	//scene.addFoods(10);
+	for(var i = 0; i < 4; i++){
 		scene.addSpecie(25, 25, 100, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
 		/*
 		var r = Math.random();
@@ -18,8 +18,8 @@ $(function(){
 		}
 		*/
 	}
-	scene.addSpecie(50, 40, 25, 250, 250);
-	scene.addSpecie(50, 40, 25, 250, 150);
+	//scene.addSpecie(50, 40, 25, 250, 250);
+	scene.addSpecie(50, 40, 100, 250, 150);
 	
 	var startStop = $("#startStopButton");
 	var speedOfSimulation = 1;
