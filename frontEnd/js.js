@@ -2,7 +2,7 @@ $(function(){
 	
 	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")));
 	
-	//scene.addFoods(10);
+	scene.addFoods(4);
 	for(var i = 0; i < 4; i++){
 		scene.addSpecie(25, 25, 100, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
 		/*

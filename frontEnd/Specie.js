@@ -98,27 +98,27 @@ function Specie(speed, size, sense, x, y){
 		}
 	}
 	this.senseFoodAndGoTo = function(foods, species, sizeX, sizeY, frequency){
-		var i = 0, j = 0, potentialFood = [];
+		var i = 0, j = 0, potentialFoodVectors = [];
 		for(; i < foods.length; i++){
 			if(this.size / 1.2 >= foods[i].size && this.distanceTo(foods[i].x, foods[i].y) <= this.size + this.sense){
-				potentialFood[j++] = foods[i];
+				potentialFoodVectors[j++] = new Vector(foods[i].x - this.x, foods[i].y - this.y);
 			}
 		}
 		for(i = 0; i < species.length; i++){
 			if(this.size / 1.2 >= species[i].size && this.distanceTo(species[i].x, species[i].y) <= this.size + this.sense){
-				potentialFood[j++] = species[i];
+				potentialFoodVectors[j++] = new Vector(species[i].x - this.x, species[i].y - this.y);
 			}
 		}
 		
-		if(potentialFood.length == 0){
+		
+		if(potentialFoodVectors.length == 0){
 			return false;
 		}else{
 			
 			var shortestPathToFood = new Vector(sizeX, sizeY);
-			for(var i = 0; i < potentialFood.length; i++){
-				var v = new Vector(potentialFood[i].x - this.x, potentialFood[i].y - this.y);
-				if(v.length() < shortestPathToFood.length()){
-					shortestPathToFood = v;
+			for(var i = 0; i < potentialFoodVectors.length; i++){
+				if(potentialFoodVectors[i].length() < shortestPathToFood.length()){
+					shortestPathToFood = potentialFoodVectors[i];
 				}
 			}
 			shortestPathToFood = shortestPathToFood.versor();
@@ -130,7 +130,7 @@ function Specie(speed, size, sense, x, y){
 		}
 	}
 	this.moveRandomly = function(sizeX, sizeY, frequency){
-		
+		var r = Math.random() * 3.14159;
 	}
 	this.move = function(species, foods, sizeX, sizeY, frequency){
 		//todo move requires energy
