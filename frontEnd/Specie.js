@@ -1,13 +1,15 @@
-function Specie(speed, size, sense, x, y){
+function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY){
 	this.speed = speed;
 	this.size = size;
 	this.sense = sense;
 	this.x = x;
 	this.y = y;
+	this.sceneSizeX = sceneSizeX;
+	this.sceneSizeY = sceneSizeY;
 	
 	this.exists = true;
 	this.foodFound = 0;
-	this.energy = 1;//todo how much for start
+	this.energy = 50000;
 	
 	this.randomDirectionX = 0;
 	this.randomDirectionY = 0;
@@ -21,6 +23,20 @@ function Specie(speed, size, sense, x, y){
 	this.div.css("backgroundColor", "rgb("+speedToRed(speed)+","+sizeToGreen(size)+","+senseToBlue(sense)+")");
 	
 	
+	this.survived = function(){
+		if((this.x == 0 || this.x == this.sceneSizeX || this.y == 0 || this.y == this.sceneSizeY) && this.foodFound > 0)
+			return true;
+		return false;
+	}
+	this.canReproduce = function(){
+		if(this.survived() && this.foodFound >= 2)
+			return true;
+		return false;
+	}
+	this.reproduce = function(){
+		
+	}
+	
 	this.appendTo = function(scene){
 		scene.append(this.div);
 	}
@@ -28,18 +44,18 @@ function Specie(speed, size, sense, x, y){
 		this.div.remove();
 	}
 	
-	this.setX = function(x, sizeX){
-		if(x > sizeX){
-			x = sizeX;
+	this.setX = function(x){
+		if(x > this.sceneSizeX){
+			x = this.sceneSizeX;
 		}else if(x < 0){
 			x = 0;
 		}
 		this.x = x;
 		this.div.css("left", this.x - this.size + "px");
 	}
-	this.setY = function(y, sizeY){
-		if(y > sizeY){
-			y = sizeY;
+	this.setY = function(y){
+		if(y > this.sceneSizeY){
+			y = this.sceneSizeY;
 		}else if(y < 0){
 			y = 0;
 		}
@@ -47,8 +63,8 @@ function Specie(speed, size, sense, x, y){
 		this.div.css("top", this.y - this.size+ "px");
 	}
 	
-	this.moveToClosestEdge = function(sizeX, sizeY, frequency){
-		var min = sizeX - this.x;//go right
+	this.moveToClosestEdge = function(frequency){
+		var min = this.sceneSizeX - this.x;//go right
 		var horizontal = true;
 		var sign = 1;
 		
@@ -62,20 +78,19 @@ function Specie(speed, size, sense, x, y){
 			horizontal = false;
 			sign = -1;
 		}
-		if(sizeY - this.y < min){//go down
-			min = sizeY - this.y;
+		if(this.sceneSizeY - this.y < min){//go down
+			min = this.sceneSizeY - this.y;
 			horizontal = false;
 			sign = 1;
 		}
 		
-		
 		if(horizontal){
-			this.setX(this.x + sign * this.speed / frequency, sizeX);
+			this.setX(this.x + sign * this.speed / frequency);
 		}else{
-			this.setY(this.y + sign * this.speed / frequency, sizeY);
+			this.setY(this.y + sign * this.speed / frequency);
 		}
 	}
-	this.sensePredatorAndRunAway = function(species, sizeX, sizeY, frequency){
+	this.sensePredatorAndRunAway = function(species, frequency){
 		var i = 0, j = 0, predators = [];
 		for(; i < species.length; i++){
 			if(species[i].size / 1.2 >= this.size && this.distanceTo(species[i].x, species[i].y) <= this.size + this.sense){
@@ -83,7 +98,8 @@ function Specie(speed, size, sense, x, y){
 			}
 		}
 		
-		if(predators.length == 0){														//if doesn't see predators does not run away
+		
+		if(predators.length == 0){//if doesn't see predators does not run away
 			return false;
 		}else{
 			this.randomDirectionX = 0;
@@ -96,13 +112,13 @@ function Specie(speed, size, sense, x, y){
 			}
 			runAwayVector = runAwayVector.versor();
 			
-			this.setX(this.x + runAwayVector.x * this.speed / frequency, sizeX);
-			this.setY(this.y + runAwayVector.y * this.speed / frequency, sizeY);
+			this.setX(this.x + runAwayVector.x * this.speed / frequency);
+			this.setY(this.y + runAwayVector.y * this.speed / frequency);
 			
 			return true;
 		}
 	}
-	this.senseFoodAndGoTo = function(foods, species, sizeX, sizeY, frequency){
+	this.senseFoodAndGoTo = function(foods, species, frequency){
 		var i = 0, j = 0, potentialFoodVectors = [];
 		for(; i < foods.length; i++){
 			if(this.size / 1.2 >= foods[i].size && this.distanceTo(foods[i].x, foods[i].y) <= this.size + this.sense){
@@ -121,7 +137,7 @@ function Specie(speed, size, sense, x, y){
 		}else{
 			this.randomDirectionX = 0;
 			
-			var shortestPathToFood = new Vector(sizeX, sizeY);
+			var shortestPathToFood = new Vector(this.sceneSizeX, this.sceneSizeY);
 			for(var i = 0; i < potentialFoodVectors.length; i++){
 				if(potentialFoodVectors[i].length() < shortestPathToFood.length()){
 					shortestPathToFood = potentialFoodVectors[i];
@@ -129,35 +145,42 @@ function Specie(speed, size, sense, x, y){
 			}
 			shortestPathToFood = shortestPathToFood.versor();
 			
-			this.setX(this.x + shortestPathToFood.x * this.speed / frequency, sizeX);
-			this.setY(this.y + shortestPathToFood.y * this.speed / frequency, sizeY);
+			this.setX(this.x + shortestPathToFood.x * this.speed / frequency);
+			this.setY(this.y + shortestPathToFood.y * this.speed / frequency);
 			
 			return true;
 		}
 	}
-	this.moveRandomly = function(sizeX, sizeY, frequency){
+	this.moveRandomly = function(frequency){
 		if(this.randomDirectionX == 0 || this.distanceTo(this.randomDirectionX, this.randomDirectionY) <= this.speed){
-			this.randomDirectionX = Math.floor(Math.random() * sizeX + 1);
-			this.randomDirectionY = Math.floor(Math.random() * sizeY + 1);
+			this.randomDirectionX = Math.floor(Math.random() * this.sceneSizeX + 1);
+			this.randomDirectionY = Math.floor(Math.random() * this.sceneSizeY + 1);
 		}
-		var v = new Vector(this.randomDirectionX - this.x, this.randomDirectionY - this.y); //vector of new random position
+		var v = new Vector(this.randomDirectionX - this.x, this.randomDirectionY - this.y);
 		v = v.versor();
 		
-		this.setX(this.x + v.x * this.speed / frequency, sizeX);
-		this.setY(this.y + v.y * this.speed / frequency, sizeY);
+		this.setX(this.x + v.x * this.speed / frequency);
+		this.setY(this.y + v.y * this.speed / frequency);
 	}
-	this.move = function(species, foods, sizeX, sizeY, frequency){
+	this.move = function(species, foods, frequency){
 		//todo move requires energy
 		//focus on survival/reproduction flag
-		
-		if(!this.sensePredatorAndRunAway(species, sizeX, sizeY, frequency)){			//if doesn't have to run away focuses on food
-			if(this.foodFound > 0){														//if has food moves to safety
-				this.moveToClosestEdge(sizeX, sizeY, frequency);
-			}else if(!this.senseFoodAndGoTo(foods, species, sizeX, sizeY, frequency)){	//if can't find food mooves randomely
-				this.moveRandomly(sizeX, sizeY, frequency);
+		if(this.moveCost(frequency) < this.energy){
+			if(!this.sensePredatorAndRunAway(species, frequency)){			//if doesn't have to run away focuses on food
+				if(this.foodFound > 0){														//if has food moves to safety
+					this.moveToClosestEdge(frequency);
+				}else if(!this.senseFoodAndGoTo(foods, species, frequency)){	//if can't find food mooves randomely
+					this.moveRandomly(frequency);
+				}
 			}
+			this.energy -= this.moveCost(frequency);
 		}
 	}
+	
+	this.moveCost = function(frequency){
+		return Math.pow(this.size / frequency, 3) * Math.pow(this.speed / frequency, 2) + this.sense / frequency;
+	}
+	
 	this.canEat = function(x, y, size){
 		var d = this.distanceTo(x, y);
 		if(d <= this.size && this.size / 1.2 >= size){//20% bigger can eat smaller prey
@@ -166,8 +189,8 @@ function Specie(speed, size, sense, x, y){
 			return false;
 		}
 	}
-	
 	this.eat = function(){
+		this.energy += 50000;
 		this.foodFound++;
 	}
 	
@@ -175,7 +198,6 @@ function Specie(speed, size, sense, x, y){
 		return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
 	}
 }
-
 function speedToRed(speed){
 	//todo
 	return Math.floor(Math.random() * 255)
