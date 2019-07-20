@@ -44,7 +44,7 @@ function Specie(speed, size, sense, x, y){
 		this.div.css("top", this.y - this.size+ "px");
 	}
 	
-	this.moveToClosestEdge = function(sizeX, sizeY){
+	this.moveToClosestEdge = function(sizeX, sizeY, frequency){
 		var min = sizeX - this.x;//go right
 		var horizontal = true;
 		var sign = 1;
@@ -65,21 +65,21 @@ function Specie(speed, size, sense, x, y){
 			sign = 1;
 		}
 		
-		//todo move depends on speed
+		
 		if(horizontal){
-			this.setX(this.x + sign * this.speed, sizeX);
+			this.setX(this.x + sign * this.speed / frequency, sizeX);
 		}else{
-			this.setY(this.y + sign * this.speed, sizeY);
+			this.setY(this.y + sign * this.speed / frequency, sizeY);
 		}
 	}
-	this.move = function(species, foods, sizeX, sizeY){
+	this.move = function(species, foods, sizeX, sizeY, frequency){
 		//todo meve requires energy
 		//focus on survival/reproduction flag
 		
-		this.moveToClosestEdge(sizeX, sizeY);
-		//this.sensePredatorAndRunAway(species);
-		//this.senseFoodAndGoTo(foods, species);
-		//this.moveRandomly();
+		this.moveToClosestEdge(sizeX, sizeY, frequency);
+		//this.sensePredatorAndRunAway(species, frequency);
+		//this.senseFoodAndGoTo(foods, species, frequency);
+		//this.moveRandomly(frequency);
 	}
 	this.canEat = function(x, y, size){
 		var d = this.distanceTo(x, y);

@@ -20,15 +20,17 @@ $(function(){
 	}
 	
 	var startStop = $("#startStopButton");
+	var speedOfSimulation = 10;
+	var frequency = 10;
 	startStop.click(function(){
 		var interval = setInterval(function(){
-			scene.moveSpecies();
+			scene.moveSpecies(frequency);
 			scene.findingFood();
-		}, 100);
+		}, 100 / speedOfSimulation / frequency);
 		
 		setTimeout(function(){
 			clearInterval(interval);
-		}, 5000);
+		}, 5000 / speedOfSimulation);
 	});
 	
 	

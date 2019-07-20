@@ -52,9 +52,9 @@ function Scene(scene, sizeX, sizeY){
 		this.adjustFoodsTable();
 	}
 	
-	this.moveSpecies = function(){
+	this.moveSpecies = function(frequency){
 		for(var i = 0; i < this.species.length; i++){
-			this.species[i].move(this.species, this.foods, this.sizeX, this.sizeY);
+			this.species[i].move(this.species, this.foods, this.sizeX, this.sizeY, frequency);
 		}
 	}
 	
@@ -62,7 +62,7 @@ function Scene(scene, sizeX, sizeY){
 		for(var i = 0; i < this.species.length; i++){
 			if(this.species[i].exists){
 				for(var j = 0; j < this.foods.length; j++){
-					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y, 0)){
+					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y, 5)){
 						console.log("specie " + i + " eats food " + j);
 						this.species[i].eat();
 						this.removeFood(j);
