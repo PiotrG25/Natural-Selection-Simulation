@@ -3,8 +3,8 @@ $(function(){
 	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")));
 	
 	scene.addFoods(100);
-	for(var i = 0; i < 12; i++){
-		scene.addSpecie(10, 25, 1, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
+	for(var i = 0; i < 1; i++){
+		scene.addSpecie(25, 25, 1, Math.floor(Math.random() * scene.sizeX), Math.floor(Math.random() * scene.sizeY));
 		/*
 		var r = Math.random();
 		if(r < 0.25){
@@ -23,7 +23,7 @@ $(function(){
 	startStop.click(function(){
 		//var interval = setInterval(function(){
 			scene.moveSpecies();
-			//scene.findingFood();//to fix
+			scene.findingFood();//to fix
 		//}, 100);
 		
 		//setTimeout(function(){

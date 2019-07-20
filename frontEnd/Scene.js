@@ -59,11 +59,11 @@ function Scene(scene, sizeX, sizeY){
 	}
 	
 	this.findingFood = function(){
-		//todo FIX IT
 		for(var i = 0; i < this.species.length; i++){
 			if(this.species[i].exists){
 				for(var j = 0; j < this.foods.length; j++){
-					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y)){
+					if(this.foods[j].exists && this.species[i].canEat(this.foods[j].x, this.foods[j].y, 0)){
+						console.log("specie " + i + "eats food " + j);
 						this.species[i].eat();
 						this.removeFood(j);
 					}
@@ -71,6 +71,7 @@ function Scene(scene, sizeX, sizeY){
 				
 				for(var j = 0; j < this.species.length; j++){
 					if(this.species[j].exists && this.species[i].canEat(this.species[j].x, this.species[j].y, this.species[j].size)){
+						console.log("specie " + i + "eats specie " + j);
 						this.species[i].eat();
 						this.removeSpecie(j);
 					}

@@ -67,34 +67,35 @@ function Specie(speed, size, sense, x, y){
 		
 		//todo move depends on speed
 		if(horizontal){
-			this.setX(this.x + sign * min, sizeX);
+			this.setX(this.x + sign * this.speed, sizeX);
 		}else{
-			this.setY(this.y + sign * min, sizeY);
+			this.setY(this.y + sign * this.speed, sizeY);
 		}
 	}
 	this.move = function(species, foods, sizeX, sizeY){
 		//todo meve requires energy
+		//focus on survival/reproduction flag
+		
 		this.moveToClosestEdge(sizeX, sizeY);
+		//this.sensePredatorAndRunAway(species);
+		//this.senseFoodAndGoTo(foods, species);
+		//this.moveRandomly();
+	}
+	this.canEat = function(x, y, size){
+		var d = this.distanceTo(x, y);
+		if(d <= this.size && this.size / 1.2 >= size){//20% bigger can eat smaller prey
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
-	this.canEat = function(x, y){
-		var d = (x - this.x)^2 + (y - this.y) ^ 2;
-		if(d <= this.size^2)
-			return true;
-		else
-			return false;
-	}
-	/*
-	this.canEat = function(x, y, size){
-		var d = (x - this.x)^2 + (y - this.y) ^ 2;
-		if(d <= this.size^2 && this.size / 1.2 >= size)//20% bigger can eat smaller prey
-			return true;
-		else
-			return false;
-	}
-	*/
 	this.eat = function(){
 		this.foodFound++;
+	}
+	
+	this.distanceTo = function(x, y){
+		return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
 	}
 }
 
