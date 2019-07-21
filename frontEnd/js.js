@@ -28,7 +28,7 @@ $(function(){
 	
 	var startStop = $("#startStopButton");
 	var speedOfSimulation = 10;
-	var frequency = 5;
+	var frequency = 10;
 	var turns = 0;
 	
 	scene.quantityOfFood = 50;

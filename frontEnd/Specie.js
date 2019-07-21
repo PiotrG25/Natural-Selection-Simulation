@@ -187,7 +187,7 @@ function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY, focusOnReprodu
 	}
 	
 	this.moveCost = function(frequency){
-		return Math.pow(this.size / frequency, 3) * Math.pow(this.speed / frequency, 2) + this.sense / frequency;
+		return (Math.pow(this.size, 3) * Math.pow(this.speed, 2) + this.sense) / 1000 / frequency;
 	}
 	
 	this.canEat = function(x, y, size){
