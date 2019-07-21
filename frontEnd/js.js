@@ -1,6 +1,16 @@
 $(function(){
 	
 	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")), 100	, 5, 1);
+	var table = $("#stats");
+	var columns = [];
+	function adjustColumnsTable(){
+		var i = 0; j = 0, tab = [];
+		for(; i < columns.length; i++){
+			if(columns[i].exists)
+				tab[j++] = columns[i];
+		}
+		columns = tab;
+	}
 	
 	scene.addFoods();
 	for(var i = 0; i < 50; i++){
@@ -33,6 +43,12 @@ $(function(){
 		
 		setTimeout(function(){
 			clearInterval(interval);
+			columns[columns.length] = new Column(scene.getSimulationData(), scene.getSpeeds(), scene.getSizes(), scene.getSenses());
+			columns[columns.length - 1].appendTo(table);
+			if(columns.length > 30){
+				columns[0].remove();
+				adjustColumnsTable();
+			}
 			scene.nextTurn();
 		}, 5000 / speedOfSimulation);
 	});
@@ -40,3 +56,4 @@ $(function(){
 	
 	//todocreate and append column on end of turn
 });
+

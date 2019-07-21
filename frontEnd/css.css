@@ -43,3 +43,13 @@ body{
 	border-collapse: collapse;
 	border: 1px solid black;
 }
+.borderTop{
+	border-top: 3px solid black;
+}
+.borderBottom{
+	border-bottom: 3px solid black;
+}
+#stats td.borderBottom{
+	border-bottom: 3px solid black;
+}
+

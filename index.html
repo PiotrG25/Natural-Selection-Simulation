@@ -10,7 +10,10 @@
 	<script src="frontEnd/Vector.js"></script>
 	<script src="frontEnd/Specie.js"></script>
 	<script src="frontEnd/Food.js"></script>
+	<script src="frontEnd/SimulationData.js"></script>
+	<script src="frontEnd/MinAvgMax.js"></script>
 	<script src="frontEnd/Scene.js"></script>
+	<script src="frontEnd/Column.js"></script>
 	<script src="frontEnd/js.js"></script>
 </head>
 <body>
@@ -35,23 +38,23 @@
 	</table>
 	
 	<table id="stats">
-		<tr data-row="0">
+		<tr class="borderTop">
 			<td colspan="2">#simulations</td>
 		</tr>
-		<tr data-row="1">
+		<tr>
 			<td colspan="2">#species</td>
 		</tr>
-		<tr data-row="2">
+		<tr>
 			<td colspan="2">#species eaten</td>
 		</tr>
-		<tr data-row="3">
+		<tr>
 			<td colspan="2">#food</td>
 		</tr>
-		<tr data-row="4">
+		<tr>
 			<td colspan="2">#food eaten</td>
 		</tr>
 		
-		<tr>
+		<tr class="borderTop">
 			<td rowspan="3">speed</td>
 			<td>MAX</td>
 		</tr>
@@ -62,7 +65,7 @@
 			<td>MIN</td>
 		</tr>
 		
-		<tr>
+		<tr class="borderTop">
 			<td rowspan="3">size</td>
 			<td>MAX</td>
 		</tr>
@@ -73,14 +76,14 @@
 			<td>MIN</td>
 		</tr>
 		
-		<tr>
-			<td rowspan="3">sense</td>
+		<tr class="borderTop">
+			<td rowspan="3" class="borderBottom">sense</td>
 			<td>MAX</td>
 		</tr>
 		<tr>
 			<td>AVG</td>
 		</tr>
-		<tr>
+		<tr class="borderBottom">
 			<td>MIN</td>
 		</tr>
 	</table>

@@ -1,28 +1,33 @@
-function Column(simulation, species, speciesEaten, food, foodEaten, speeds, sizes, senses){
+function Column(simulationData, speeds, sizes, senses){
+	
+	this.exists = true;
 	
 	this.speedCell = new MinAvgMax(speeds);
 	this.sizeCell = new MinAvgMax(sizes);
 	this.sensesCell = new MinAvgMax(senses);
 	
 	this.tdArray = [];
+	this.addToTdArray = function(data){
+		this.tdArray[this.tdArray.length] = $("<td>" + data.toFixed(3)+ "</td>");
+	}
 	
-	this.addToTdArray(simulation);
-	this.addToTdArray(species);
-	this.addToTdArray(speciesEaten);
-	this.addToTdArray(food);
-	this.addToTdArray(foodEaten);
+	this.addToTdArray(simulationData.simulation);
+	this.addToTdArray(simulationData.species);
+	this.addToTdArray(simulationData.speciesEaten);
+	this.addToTdArray(simulationData.food);
+	this.addToTdArray(simulationData.foodEaten);
 	
-	this.addToTdArray(speedCell.max);
-	this.addToTdArray(speedCell.avg);
-	this.addToTdArray(speedCell.min);
+	this.addToTdArray(this.speedCell.max);
+	this.addToTdArray(this.speedCell.avg);
+	this.addToTdArray(this.speedCell.min);
 	
-	this.addToTdArray(sizeCell.max);
-	this.addToTdArray(sizeCell.avg);
-	this.addToTdArray(sizeCell.min);
+	this.addToTdArray(this.sizeCell.max);
+	this.addToTdArray(this.sizeCell.avg);
+	this.addToTdArray(this.sizeCell.min);
 	
-	this.addToTdArray(sensesCell.max);
-	this.addToTdArray(sensesCell.avg);
-	this.addToTdArray(sensesCell.min);
+	this.addToTdArray(this.sensesCell.max);
+	this.addToTdArray(this.sensesCell.avg);
+	this.addToTdArray(this.sensesCell.min);
 	
 	
 	
@@ -33,6 +38,7 @@ function Column(simulation, species, speciesEaten, food, foodEaten, speeds, size
 		}
 	}
 	this.remove = function(){
+		this.exists = false;
 		for(var i = 0; i < this.tdArray.length; i++){
 			this.tdArray[i].remove();
 		}
@@ -43,7 +49,4 @@ function Column(simulation, species, speciesEaten, food, foodEaten, speeds, size
 	}
 	
 	
-	this.addToTdArray = function(data){
-		this.tdArray[this.tdArray.length] = $("<td>" + data + "</td>");
-	}
 }
