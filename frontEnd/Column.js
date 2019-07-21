@@ -8,7 +8,11 @@ function Column(simulationData, speeds, sizes, senses){
 	
 	this.tdArray = [];
 	this.addToTdArray = function(data){
-		this.tdArray[this.tdArray.length] = $("<td>" + data.toFixed(3)+ "</td>");
+		if(data == Math.round(data)){
+			this.tdArray[this.tdArray.length] = $("<td>" + data + "</td>");
+		}else{
+			this.tdArray[this.tdArray.length] = $("<td>" + data.toFixed(3)+ "</td>");
+		}
 	}
 	
 	this.addToTdArray(simulationData.simulation);
