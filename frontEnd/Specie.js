@@ -10,7 +10,7 @@ function Specie(speed, size, sense, x, y, sceneSizeX, sceneSizeY, focusOnReprodu
 	
 	this.exists = true;
 	this.foodFound = 0;
-	this.energyConstant = 50000;
+	this.energyConstant = 500000;
 	this.energy = this.energyConstant;
 	
 	

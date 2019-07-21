@@ -1,9 +1,9 @@
 $(function(){
 	
-	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")), 100	, 5, 0.5);
+	var scene = new Scene($("#scene"), parseInt($("#scene").css("width")), parseInt($("#scene").css("height")), 100	, 5, 1);
 	
 	scene.addFoods();
-	for(var i = 0; i < 12; i++){
+	for(var i = 0; i < 50; i++){
 		var r = Math.random();
 		if(r < 0.25){
 			scene.addSpecie(25, 25, 25, Math.floor(Math.random() * scene.sizeX), 0);
@@ -14,12 +14,11 @@ $(function(){
 		}else{
 			scene.addSpecie(25, 25, 25, 500, Math.floor(Math.random() * scene.sizeY));
 		}
-		
 	}
 	
 	var startStop = $("#startStopButton");
 	var speedOfSimulation = 10;
-	var frequency = 10;
+	var frequency = 5;
 	var turns = 0;
 	
 	scene.quantityOfFood = 50;
@@ -39,12 +38,5 @@ $(function(){
 	});
 	
 	
-	/*
-	var interval = setInterval(function(){
-	specie.eq(0).css("top", Math.floor(Math.random() * 500) + "px");
-	
-	setTimeout(function(){
-		clearInterval(interval);
-	}, 10000);
-	*/
+	//todocreate and append column on end of turn
 });

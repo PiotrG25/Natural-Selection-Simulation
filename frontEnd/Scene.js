@@ -32,6 +32,29 @@ function Scene(scene, sizeX, sizeY, quantityOfFood, mutationChance, reproduction
 	}
 	
 	
+	this.getSpeeds = function(){
+		var arr = [];
+		for(var i = 0; i < species.length; i++){
+			arr[i] = species[i].speed;
+		}
+		return arr;
+	}
+	this.getSizes = function(){
+		var arr = [];
+		for(var i = 0; i < species.length; i++){
+			arr[i] = species[i].size;
+		}
+		return arr;
+	}
+	this.getSenses = function(){
+		var arr = [];
+		for(var i = 0; i < species.length; i++){
+			arr[i] = species[i].sense;
+		}
+		return arr;
+	}
+	
+	
 	this.addFoods = function(){
 		for(var i = 0; i < this.quantityOfFood; i++){
 			this.foods[i] = new Food(Math.floor(Math.random() * parseInt(this.sizeX)), Math.floor(Math.random() * parseInt(this.sizeY)));

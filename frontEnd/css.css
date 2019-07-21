@@ -34,3 +34,12 @@ body{
 	margin-bottom: auto;
 }
 
+#stats{
+	margin-top: 50px;
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+#stats td{
+	border-collapse: collapse;
+	border: 1px solid black;
+}
